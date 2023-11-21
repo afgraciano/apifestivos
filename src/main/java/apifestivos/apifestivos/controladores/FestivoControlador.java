@@ -19,7 +19,8 @@ public class FestivoControlador {
     private FestivoServicio festivoServicio;
 
     @GetMapping("/verificar/{año}/{mes}/{dia}")
-    public ResponseEntity<String> verificarFestivo(@PathVariable int año, @PathVariable int mes, @PathVariable int dia) {
+    public ResponseEntity<String> verificarFestivo(@PathVariable int año, @PathVariable int mes,
+            @PathVariable int dia) {
         String respuesta;
         if (festivoServicio.esFechaValida(String.format("%d-%02d-%02d", año, mes, dia))) {
             if (festivoServicio.esFestivo(new Date(año - 1900, mes - 1, dia))) {
@@ -33,27 +34,53 @@ public class FestivoControlador {
         }
     }
 
-   /*  @GetMapping("/obtener")
-    public ResponseEntity<List<FestivoDto>> obtenerFestivos(@RequestParam int año) {
+    /*
+     * @GetMapping("/obtener")
+     * public ResponseEntity<List<FestivoDto>> obtenerFestivos(@RequestParam int
+     * año) {
+     * List<FestivoDto> festivos = festivoServicio.obtenerFestivos(año);
+     * return new ResponseEntity<>(festivos, HttpStatus.OK);
+     * }
+     */
+
+    @RequestMapping(value = "/obtener/{año}", method = RequestMethod.GET)
+    public ResponseEntity<List<FestivoDto>> obtener(@PathVariable int año) {
         List<FestivoDto> festivos = festivoServicio.obtenerFestivos(año);
-        return new ResponseEntity<>(festivos, HttpStatus.OK);
-    }*/
 
-   /*  @PostMapping("/guardar")
-    public ResponseEntity<Void> guardarFestivo(@RequestBody FestivoDto festivoDto) {
-        festivoServicio.guardarFestivo(festivoDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        if (festivos != null && !festivos.isEmpty()) {
+            return new ResponseEntity<>(festivos, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+    /*
+     * 
+     * @RequestMapping(value = "/obtener/{año}", method = RequestMethod.GET)
+     * public List<FestivoDto> obtener(@PathVariable int año) {
+     * FestivoServicio servicio;
+     * return festivoServicio.obtenerFestivos(año);
+     * }
+     */
 
-    @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Void> actualizarFestivo(@PathVariable Long id, @RequestBody FestivoDto festivoDto) {
-        festivoServicio.actualizarFestivo(id, festivoDto);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Void> eliminarFestivo(@PathVariable Long id) {
-        festivoServicio.eliminarFestivo(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }*/
+    /*
+     * @PostMapping("/guardar")
+     * public ResponseEntity<Void> guardarFestivo(@RequestBody FestivoDto
+     * festivoDto) {
+     * festivoServicio.guardarFestivo(festivoDto);
+     * return new ResponseEntity<>(HttpStatus.CREATED);
+     * }
+     * 
+     * @PutMapping("/actualizar/{id}")
+     * public ResponseEntity<Void> actualizarFestivo(@PathVariable Long
+     * id, @RequestBody FestivoDto festivoDto) {
+     * festivoServicio.actualizarFestivo(id, festivoDto);
+     * return new ResponseEntity<>(HttpStatus.OK);
+     * }
+     * 
+     * @DeleteMapping("/eliminar/{id}")
+     * public ResponseEntity<Void> eliminarFestivo(@PathVariable Long id) {
+     * festivoServicio.eliminarFestivo(id);
+     * return new ResponseEntity<>(HttpStatus.OK);
+     * }
+     */
 }

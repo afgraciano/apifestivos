@@ -12,11 +12,13 @@ public class FestivoDto {
     private Date fecha;
     private int diasPascua;
 
+    //private String festivo;
+
     public FestivoDto() {
     }
 
     public FestivoDto(String festivo, Date fecha) {
-     // this.nombre = nombre;
+      this.nombre = festivo;
         this.fecha = fecha;
     }
 
@@ -27,6 +29,8 @@ public class FestivoDto {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+   
 
     public Date getFecha() {
         return fecha;
@@ -52,4 +56,5 @@ public class FestivoDto {
     public void setFestivo(String festivo) {
         this.nombre = festivo;
     }
+     
 }
