@@ -20,7 +20,7 @@ public class FestivoControlador {
     private FestivoServicio festivoServicio;
 
     @GetMapping("/verificar/{año}/{mes}/{dia}")
-    public ResponseEntity<String> verificarFestivo(@PathVariable int año, @PathVariable int mes,
+    public String verificarFestivo(@PathVariable int año, @PathVariable int mes,
             @PathVariable int dia) {
         String respuesta;
         if (festivoServicio.esFechaValida(String.format("%d-%02d-%02d", año, mes, dia))) {
@@ -29,9 +29,9 @@ public class FestivoControlador {
             } else {
                 respuesta = "No es festivo";
             }
-            return new ResponseEntity<>(respuesta, HttpStatus.OK);
+            return respuesta;//new ResponseEntity<>(respuesta, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Fecha no válida", HttpStatus.BAD_REQUEST);
+            return "Fecha no válida";//new ResponseEntity<>("Fecha no válida", HttpStatus.BAD_REQUEST);
         }
     }
 
