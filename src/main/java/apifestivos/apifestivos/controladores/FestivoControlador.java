@@ -8,11 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/festivos")
-//@CrossOrigin(origins = "http://localhost:4200") // Cambia esta URL según tu configuración de Angular
+// @CrossOrigin(origins = "http://localhost:4200") // Cambia esta URL según tu
+// configuración de Angular
 @CrossOrigin(origins = "*")
 public class FestivoControlador {
 
@@ -20,20 +23,41 @@ public class FestivoControlador {
     private FestivoServicio festivoServicio;
 
     @GetMapping("/verificar/{año}/{mes}/{dia}")
-    public String verificarFestivo(@PathVariable int año, @PathVariable int mes,
+    public ResponseEntity<Map<String, String>> verificarFestivo(@PathVariable int año, @PathVariable int mes,
             @PathVariable int dia) {
-        String respuesta;
+        Map<String, String> respuesta = new HashMap<>();
         if (festivoServicio.esFechaValida(String.format("%d-%02d-%02d", año, mes, dia))) {
             if (festivoServicio.esFestivo(new Date(año - 1900, mes - 1, dia))) {
-                respuesta = "Es Festivo";
+                respuesta.put("mensaje", "Es Festivo");
             } else {
-                respuesta = "No es festivo";
+                respuesta.put("mensaje", "No es festivo");
             }
-            return respuesta;//new ResponseEntity<>(respuesta, HttpStatus.OK);
         } else {
-            return "Fecha no válida";//new ResponseEntity<>("Fecha no válida", HttpStatus.BAD_REQUEST);
+            respuesta.put("mensaje", "Fecha no válida");
         }
+        return ResponseEntity.ok(respuesta);
     }
+
+    /*
+     * @GetMapping("/verificar/{año}/{mes}/{dia}")
+     * public String verificarFestivo(@PathVariable int año, @PathVariable int mes,
+     * 
+     * @PathVariable int dia) {
+     * String respuesta;
+     * if (festivoServicio.esFechaValida(String.format("%d-%02d-%02d", año, mes,
+     * dia))) {
+     * if (festivoServicio.esFestivo(new Date(año - 1900, mes - 1, dia))) {
+     * respuesta = "Es Festivo";
+     * } else {
+     * respuesta = "No es festivo";
+     * }
+     * return respuesta;//new ResponseEntity<>(respuesta, HttpStatus.OK);
+     * } else {
+     * return "Fecha no válida";//new ResponseEntity<>("Fecha no válida",
+     * HttpStatus.BAD_REQUEST);
+     * }
+     * }
+     */
 
     /*
      * @GetMapping("/obtener")
