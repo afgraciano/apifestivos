@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/festivos")
+//@CrossOrigin(origins = "http://localhost:4200") // Cambia esta URL según tu configuración de Angular
 @CrossOrigin(origins = "*")
 public class FestivoControlador {
 
