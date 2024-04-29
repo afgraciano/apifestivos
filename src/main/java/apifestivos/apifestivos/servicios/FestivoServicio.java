@@ -95,7 +95,34 @@ public class FestivoServicio implements IFestivoServicio {
         return fecha;
     }
 
-    
+    private List<Festivo> calcularFestivos(List<Festivo> festivos, int año) {
+        if (festivos != null) {
+            Date pascua = obtenerDomingoPascua(año);
+            int i = 0;
+            for (final Festivo festivo : festivos) {
+                switch (festivo.getTipo().getId()) {
+                    case 1:
+                        festivo.setFecha(new Date(año - 1900, festivo.getMes() - 1, festivo.getDia()));
+                        break;
+                    case 2:
+                        festivo.setFecha(siguienteLunes(new Date(año - 1900, festivo.getMes() - 1, festivo.getDia())));
+                        break;
+                    case 3:
+                        festivo.setFecha(agregarDias(pascua, festivo.getDiasPascua()));
+                        break;
+                    case 4:
+                        festivo.setFecha(siguienteLunes(agregarDias(pascua, festivo.getDiasPascua())));
+                        break;
+                    default:
+                        break;
+                }
+                festivos.set(i, festivo);
+                i++;
+            }
+        }
+        return festivos;
+    }
+
     @Override
     public List<FestivoDto> obtenerFestivos(int age) {
         List<Festivo> festivos = repositorio.findAll();
