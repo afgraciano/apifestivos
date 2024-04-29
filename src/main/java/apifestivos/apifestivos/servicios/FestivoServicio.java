@@ -37,10 +37,10 @@ public class FestivoServicio implements IFestivoServicio {
 
         if (d + e < 10) {
             dia = d + e + 22;
-            mes = 3; 
+            mes = 3;
         } else {
             dia = d + e - 9;
-            mes = 4; 
+            mes = 4;
         }
 
         corregirExcepcionesEspeciales(a, d, e, dia, mes);
@@ -139,8 +139,6 @@ public class FestivoServicio implements IFestivoServicio {
 
     private boolean esFestivo(List<Festivo> festivos, Date fecha) {
         if (festivos != null) {
-
-            festivos = calcularFestivos(festivos, fecha.getYear() + 1900);
 
             for (final Festivo festivo : festivos) {
                 if (fechasIguales(festivo.getFecha(), fecha))
