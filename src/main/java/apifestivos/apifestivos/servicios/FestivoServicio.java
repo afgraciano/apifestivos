@@ -48,8 +48,8 @@ public class FestivoServicio implements IFestivoServicio {
         int D = (19 * A + M) % 30;
         int E = (2 * B + 4 * C + 6 * D + N) % 7;
 
-        int mes;
         int dia;
+        int mes;
 
         if (D + E < 10) {
             dia = D + E + 22;
@@ -59,11 +59,9 @@ public class FestivoServicio implements IFestivoServicio {
             mes = 4; // Abril
         }
 
-        // Excepciones especiales
-        if (dia == 26 && mes == 4)
-            dia = 19;
-        if (dia == 25 && mes == 4 && D == 28 && E == 6 && A > 10)
-            dia = 18;
+        if ((dia == 26 && mes == 4) || (dia == 25 && mes == 4 && D == 28 && E == 6 && A > 10)) {
+            dia -= 7;
+        }
 
         return new Date(age - 1900, mes - 1, dia);
     }
