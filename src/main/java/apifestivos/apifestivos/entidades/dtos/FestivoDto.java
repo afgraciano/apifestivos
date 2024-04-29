@@ -44,12 +44,5 @@ public class FestivoDto {
         this.diasPascua = diasPascua;
     }
 
-    public String getFestivo() {
-        return nombre;
-    }
-
-    public void setFestivo(String festivo) {
-        this.nombre = festivo;
-    }
-
+   
 }
