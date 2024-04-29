@@ -7,10 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import apifestivos.apifestivos.interfaces.IFestivoServicio;
 import apifestivos.apifestivos.entidades.Festivo;
 import apifestivos.apifestivos.entidades.dtos.FestivoDto;
@@ -26,27 +23,27 @@ public class FestivoServicio implements IFestivoServicio {
     }
 
     private Date obtenerDomingoPascua(int age) {
-        int M = calcularM(age);
-        int N = calcularN(age, M);
+        int m = calcularM(age);
+        int n = calcularN(age, m);
 
-        int A = age % 19;
-        int B = age % 4;
-        int C = age % 7;
-        int D = (19 * A + M) % 30;
-        int E = (2 * B + 4 * C + 6 * D + N) % 7;
+        int a = age % 19;
+        int b = age % 4;
+        int c = age % 7;
+        int d = (19 * a + m) % 30;
+        int e = (2 * b + 4 * c + 6 * d + n) % 7;
 
         int dia;
         int mes;
 
-        if (D + E < 10) {
-            dia = D + E + 22;
+        if (d + e < 10) {
+            dia = d + e + 22;
             mes = 3; // Marzo
         } else {
-            dia = D + E - 9;
+            dia = d + e - 9;
             mes = 4; // Abril
         }
 
-        corregirExcepcionesEspeciales(age, A, D, E, dia, mes);
+        corregirExcepcionesEspeciales(age, a, d, e, dia, mes);
 
         return new Date(age - 1900, mes - 1, dia);
     }
@@ -64,19 +61,19 @@ public class FestivoServicio implements IFestivoServicio {
         return 0;
     }
 
-    private int calcularN(int age, int M) {
-        if (M == 22) {
+    private int calcularN(int age, int m) {
+        if (m == 22) {
             return 2;
-        } else if (M == 23) {
+        } else if (m == 23) {
             return (age <= 1799) ? 3 : 4;
-        } else if (M == 24) {
+        } else if (m == 24) {
             return (age <= 2199) ? 5 : 6;
         }
         return 0;
     }
 
-    private void corregirExcepcionesEspeciales(int age, int A, int D, int E, int dia, int mes) {
-        if ((dia == 26 && mes == 4) || (dia == 25 && mes == 4 && D == 28 && E == 6 && A > 10)) {
+    private void corregirExcepcionesEspeciales(int age, int a, int d, int e, int dia, int mes) {
+        if ((dia == 26 && mes == 4) || (dia == 25 && mes == 4 && d == 28 && e == 6 && a > 10)) {
             dia -= 7;
         }
     }
@@ -127,9 +124,9 @@ public class FestivoServicio implements IFestivoServicio {
     }
 
     @Override
-    public List<FestivoDto> obtenerFestivos(int año) {
+    public List<FestivoDto> obtenerFestivos(int age) {
         List<Festivo> festivos = repositorio.findAll();
-        festivos = calcularFestivos(festivos, año);
+        festivos = calcularFestivos(festivos, age);
         List<FestivoDto> fechas = new ArrayList<FestivoDto>();
         for (final Festivo festivo : festivos) {
             fechas.add(new FestivoDto(festivo.getNombre(), festivo.getFecha()));
