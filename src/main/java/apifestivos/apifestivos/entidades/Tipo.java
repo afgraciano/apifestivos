@@ -16,8 +16,6 @@ public class Tipo {
     @Column(unique = true)
     private String tipo;
 
-  
-
     public Tipo() {
     }
 
@@ -26,7 +24,6 @@ public class Tipo {
         this.tipo = tipo;
     }
 
-  
     public int getId() {
         return id;
     }

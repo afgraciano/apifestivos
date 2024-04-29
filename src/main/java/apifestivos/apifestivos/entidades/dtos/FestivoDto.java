@@ -5,20 +5,18 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class FestivoDto {
-    
+
     private String nombre;
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date fecha;
     private int diasPascua;
-
-   
 
     public FestivoDto() {
     }
 
     public FestivoDto(String festivo, Date fecha) {
-      this.nombre = festivo;
+        this.nombre = festivo;
         this.fecha = fecha;
     }
 
@@ -29,8 +27,6 @@ public class FestivoDto {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-   
 
     public Date getFecha() {
         return fecha;
@@ -48,13 +44,12 @@ public class FestivoDto {
         this.diasPascua = diasPascua;
     }
 
- 
     public String getFestivo() {
-        return nombre;  
+        return nombre;
     }
 
     public void setFestivo(String festivo) {
         this.nombre = festivo;
     }
-     
+
 }

@@ -14,13 +14,13 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Festivo {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "secuencia_festivo")
     @GenericGenerator(name = "secuencia_festivo", strategy = "increment")
     @Column(name = "id")
     private Long id;
-    
+
     @Column(name = "dia")
     private int dia;
 
@@ -99,7 +99,6 @@ public class Festivo {
         this.tipo = tipo;
     }
 
-    
     public Date getFecha() {
         return fecha;
     }
@@ -107,6 +106,5 @@ public class Festivo {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-
 
 }
