@@ -43,7 +43,7 @@ public class FestivoServicio implements IFestivoServicio {
             mes = 4; // Abril
         }
 
-        corregirExcepcionesEspeciales(age, a, d, e, dia, mes);
+        corregirExcepcionesEspeciales( a, d, e, dia, mes);
 
         return new Date(age - 1900, mes - 1, dia);
     }
@@ -72,7 +72,7 @@ public class FestivoServicio implements IFestivoServicio {
         return 0;
     }
 
-    private void corregirExcepcionesEspeciales(int age, int a, int d, int e, int dia, int mes) {
+    private void corregirExcepcionesEspeciales(int a, int d, int e, int dia, int mes) {
         if ((dia == 26 && mes == 4) || (dia == 25 && mes == 4 && d == 28 && e == 6 && a > 10)) {
             dia -= 7;
         }
