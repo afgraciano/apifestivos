@@ -40,7 +40,7 @@ public class FestivoControlador {
         return ResponseEntity.ok(respuesta);
     }
 
-    @RequestMapping(value = "/obtener/{age}", method = RequestMethod.GET)
+    @GetMapping("/obtener/{age}")
     public ResponseEntity<List<FestivoDto>> obtener(@PathVariable int age) {
         List<FestivoDto> festivos = festivoServicio.obtenerFestivos(age);
 
