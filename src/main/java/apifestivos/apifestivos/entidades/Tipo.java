@@ -16,7 +16,7 @@ public class Tipo {
     @Column(unique = true)
     private String tipo;
 
-    // Otros atributos y métodos getter/setter según sea necesario
+  
 
     public Tipo() {
     }
@@ -26,7 +26,7 @@ public class Tipo {
         this.tipo = tipo;
     }
 
-    // Agrega los siguientes getters y setters
+  
     public int getId() {
         return id;
     }

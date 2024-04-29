@@ -37,10 +37,10 @@ public class FestivoServicio implements IFestivoServicio {
 
         if (d + e < 10) {
             dia = d + e + 22;
-            mes = 3; // Marzo
+            mes = 3; 
         } else {
             dia = d + e - 9;
-            mes = 4; // Abril
+            mes = 4; 
         }
 
         corregirExcepcionesEspeciales(a, d, e, dia, mes);
@@ -81,7 +81,7 @@ public class FestivoServicio implements IFestivoServicio {
     private Date agregarDias(Date fecha, int dias) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(fecha);
-        cal.add(Calendar.DATE, dias); // minus number would decrement the days
+        cal.add(Calendar.DATE, dias);
         return cal.getTime();
     }
 
