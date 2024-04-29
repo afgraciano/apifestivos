@@ -43,7 +43,7 @@ public class FestivoServicio implements IFestivoServicio {
             mes = 4; // Abril
         }
 
-        corregirExcepcionesEspeciales( a, d, e, dia, mes);
+        corregirExcepcionesEspeciales(a, d, e, dia, mes);
 
         return new Date(age - 1900, mes - 1, dia);
     }
@@ -126,7 +126,6 @@ public class FestivoServicio implements IFestivoServicio {
     @Override
     public List<FestivoDto> obtenerFestivos(int age) {
         List<Festivo> festivos = repositorio.findAll();
-        festivos = calcularFestivos(festivos, age);
         List<FestivoDto> fechas = new ArrayList<FestivoDto>();
         for (final Festivo festivo : festivos) {
             fechas.add(new FestivoDto(festivo.getNombre(), festivo.getFecha()));
