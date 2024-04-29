@@ -19,40 +19,38 @@ import apifestivos.apifestivos.repositorios.IFestivoRepositorio;
 @Service
 public class FestivoServicio implements IFestivoServicio {
 
-    @Autowired
     IFestivoRepositorio repositorio;
 
-    private Date obtenerDomingoPascua(int año) {
-        int mes, dia, A, B, C, D, E, M, N;
-        M = 0;
-        N = 0;
-        if (año >= 1583 && año <= 1699) {
+    public FestivoServicio(IFestivoRepositorio repositorio) {
+        this.repositorio = repositorio;
+    }
+
+    private Date obtenerDomingoPascua(int age) {
+        int M = 0;
+        int N = 0;
+
+        if (age >= 1583 && age <= 1699) {
             M = 22;
             N = 2;
-        } else if (año >= 1700 && año <= 1799) {
+        } else if (age >= 1700 && age <= 1899) {
             M = 23;
-            N = 3;
-        } else if (año >= 1800 && año <= 1899) {
-            M = 23;
-            N = 4;
-        } else if (año >= 1900 && año <= 2099) {
+            N = (age <= 1799) ? 3 : 4;
+        } else if (age >= 1900 && age <= 2099) {
             M = 24;
-            N = 5;
-        } else if (año >= 2100 && año <= 2199) {
-            M = 24;
-            N = 6;
-        } else if (año >= 2200 && año <= 2299) {
+            N = (age <= 2199) ? 5 : 6;
+        } else if (age >= 2100 && age <= 2299) {
             M = 25;
-            N = 0;
         }
 
-        A = año % 19;
-        B = año % 4;
-        C = año % 7;
-        D = ((19 * A) + M) % 30;
-        E = ((2 * B) + (4 * C) + (6 * D) + N) % 7;
+        int A = age % 19;
+        int B = age % 4;
+        int C = age % 7;
+        int D = (19 * A + M) % 30;
+        int E = (2 * B + 4 * C + 6 * D + N) % 7;
 
-        // Decidir entre los 2 casos
+        int mes;
+        int dia;
+
         if (D + E < 10) {
             dia = D + E + 22;
             mes = 3; // Marzo
@@ -66,7 +64,8 @@ public class FestivoServicio implements IFestivoServicio {
             dia = 19;
         if (dia == 25 && mes == 4 && D == 28 && E == 6 && A > 10)
             dia = 18;
-        return new Date(año - 1900, mes - 1, dia);
+
+        return new Date(age - 1900, mes - 1, dia);
     }
 
     private Date agregarDias(Date fecha, int dias) {
@@ -104,6 +103,8 @@ public class FestivoServicio implements IFestivoServicio {
                     case 4:
                         festivo.setFecha(siguienteLunes(agregarDias(pascua, festivo.getDiasPascua())));
                         break;
+                    default:
+                        break;
                 }
                 festivos.set(i, festivo);
                 i++;
@@ -129,11 +130,8 @@ public class FestivoServicio implements IFestivoServicio {
 
     private boolean esFestivo(List<Festivo> festivos, Date fecha) {
         if (festivos != null) {
-            // if (festivos.get(0).getFecha() != null && fecha.getYear() !=
-            // festivos.get(0).getFecha().getYear())
-            festivos = calcularFestivos(festivos, fecha.getYear() + 1900);
 
-            // System.out.println(fecha.getYear());
+            festivos = calcularFestivos(festivos, fecha.getYear() + 1900);
 
             for (final Festivo festivo : festivos) {
                 if (fechasIguales(festivo.getFecha(), fecha))
