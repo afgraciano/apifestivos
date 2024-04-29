@@ -14,14 +14,14 @@ public class Tipo {
     private int id;
 
     @Column(unique = true)
-    private String tipo;
+    private String type;
 
     public Tipo() {
     }
 
-    public Tipo(int id, String tipo) {
+    public Tipo(int id, String type) {
         this.id = id;
-        this.tipo = tipo;
+        this.type = type;
     }
 
     public int getId() {
@@ -32,11 +32,11 @@ public class Tipo {
         this.id = id;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getType() {
+        return type;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setType(String type) {
+        this.type = type;
     }
 }
