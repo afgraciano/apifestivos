@@ -13,7 +13,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/festivos")
 
-@CrossOrigin(origins = "*")
+
 public class FestivoControlador {
 
     private FestivoServicio festivoServicio;
