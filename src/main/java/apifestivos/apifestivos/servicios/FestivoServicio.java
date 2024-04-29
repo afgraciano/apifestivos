@@ -26,21 +26,8 @@ public class FestivoServicio implements IFestivoServicio {
     }
 
     private Date obtenerDomingoPascua(int age) {
-        int M = 0;
-        int N = 0;
-
-        if (age >= 1583 && age <= 1699) {
-            M = 22;
-            N = 2;
-        } else if (age >= 1700 && age <= 1899) {
-            M = 23;
-            N = (age <= 1799) ? 3 : 4;
-        } else if (age >= 1900 && age <= 2099) {
-            M = 24;
-            N = (age <= 2199) ? 5 : 6;
-        } else if (age >= 2100 && age <= 2299) {
-            M = 25;
-        }
+        int M = calcularM(age);
+        int N = calcularN(age, M);
 
         int A = age % 19;
         int B = age % 4;
@@ -59,11 +46,39 @@ public class FestivoServicio implements IFestivoServicio {
             mes = 4; // Abril
         }
 
+        corregirExcepcionesEspeciales(age, A, D, E, dia, mes);
+
+        return new Date(age - 1900, mes - 1, dia);
+    }
+
+    private int calcularM(int age) {
+        if (age >= 1583 && age <= 1699) {
+            return 22;
+        } else if (age >= 1700 && age <= 1899) {
+            return 23;
+        } else if (age >= 1900 && age <= 2099) {
+            return 24;
+        } else if (age >= 2100 && age <= 2299) {
+            return 25;
+        }
+        return 0;
+    }
+
+    private int calcularN(int age, int M) {
+        if (M == 22) {
+            return 2;
+        } else if (M == 23) {
+            return (age <= 1799) ? 3 : 4;
+        } else if (M == 24) {
+            return (age <= 2199) ? 5 : 6;
+        }
+        return 0;
+    }
+
+    private void corregirExcepcionesEspeciales(int age, int A, int D, int E, int dia, int mes) {
         if ((dia == 26 && mes == 4) || (dia == 25 && mes == 4 && D == 28 && E == 6 && A > 10)) {
             dia -= 7;
         }
-
-        return new Date(age - 1900, mes - 1, dia);
     }
 
     private Date agregarDias(Date fecha, int dias) {
